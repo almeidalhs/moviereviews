@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Order Summary</h4>
+                </div>
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Movie</th>
+                                <th class="text-end">Price</th>
+                                <th class="text-end">Quantity</th>
+                                <th class="text-end">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in cart.items.all %}
+                            <tr>
+                                <td>{{ item.movie.title }}</td>
+                                <td class="text-end">${{ item.movie.price }}</td>
+                                <td class="text-end">{{ item.quantity }}</td>
+                                <td class="text-end">${{ item.total_price }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0">Checkout Details</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" id="order-form">
+                        {% csrf_token %}
+                        
+                        <!-- Payment Method Selection -->
+                        <div class="mb-4">
+                            <h5>Payment Method</h5>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="payment_method" 
+                                       id="credit-card" value="credit_card" required>
+                                <label class="form-check-label" for="credit-card">
+                                    Credit Card
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="payment_method" 
+                                       id="paypal" value="paypal">
+                                <label class="form-check-label" for="paypal">
+                                    PayPal
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Billing Address -->
+                        <div class="mb-4">
+                            <h5>Billing Address</h5>
+                            <div class="form-group">
+                                <label for="street_address">Street Address</label>
+                                <input type="text" class="form-control" id="street_address" 
+                                       name="street_address" required>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="city">City</label>
+                                        <input type="text" class="form-control" id="city" name="city" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="zip_code">ZIP Code</label>
+                                        <input type="text" class="form-control" id="zip_code" name="zip_code" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Order Total -->
+                        <div class="alert alert-info">
+                            <h5 class="mb-0">Total Amount: ${{ cart.total_amount|floatformat:2 }}</h5>
+                        </div>
+
+                        <!-- Terms Agreement -->
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="terms" required>
+                            <label class="form-check-label" for="terms">
+                                I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">
+                                    Terms and Conditions
+                                </a>
+                            </label>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                Confirm Order
+                            </button>
+                            <a href="{% url 'cart:cart_detail' %}" class="btn btn-outline-secondary">
+                                Back to Cart
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Terms Modal -->
+<div class="modal fade" id="termsModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Terms and Conditions</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Add your terms and conditions content here -->
+                <p>All purchases are final. By completing this transaction...</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Client-side validation
+document.getElementById('order-form').addEventListener('submit', function(e) {
+    const termsChecked = document.getElementById('terms').checked;
+    const paymentSelected = document.querySelector('input[name="payment_method"]:checked');
+    
+    if (!paymentSelected) {
+        alert('Please select a payment method');
+        e.preventDefault();
+    }
+    
+    if (!termsChecked) {
+        alert('You must agree to the terms and conditions');
+        e.preventDefault();
+    }
+});
+</script>
+{% endblock %}

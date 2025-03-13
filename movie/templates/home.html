@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/movie_list.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <!-- 搜索栏优化 -->
+  <div class="search-section mb-5">
+    <form class="search-form">
+      <div class="input-group">
+        <input type="text"
+               class="form-control form-control-lg"
+               placeholder="Search movies..."
+               name="searchMovie"
+               aria-label="Search movies">
+        <button type="submit" class="btn btn-primary btn-lg">
+          <i class="bi bi-search me-2"></i>Search
+        </button>
+      </div>
+    </form>
+    {% if searchTerm %}
+    <p class="search-result-text mt-2 text-muted">
+      Showing results for: <strong>"{{ searchTerm }}"</strong>
+    </p>
+    {% endif %}
+  </div>
+
+  <!-- 电影列表网格布局 -->
+  <div class="movie-grid">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+      {% for movie in movies %}
+      <div class="col">
+        <div class="card h-100 shadow-sm movie-card">
+          <a href="{% url 'movie:detail' movie.id %}" class="movie-link">
+            <!-- 图片优化 -->
+            <div class="movie-image-wrapper">
+              <img src="{{ movie.image.url }}"
+                   alt="{{ movie.title }}"
+                   class="card-img-top movie-image"
+                   loading="lazy"
+                   width="200"
+                   height="300">
+            </div>
+            <div class="card-body">
+              <h3 class="card-title movie-title">{{ movie.title }}</h3>
+              <p class="card-text movie-description">{{ movie.description|truncatechars:100 }}</p>
+            </div>
+          </a>
+          <div class="card-footer bg-transparent">
+            {% if movie.url %}
+            <a href="{{ movie.url }}"
+               class="btn btn-outline-primary watch-btn"
+               target="_blank">
+              <i class="bi bi-play-circle me-2"></i>Watch Now
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <div class="alert alert-info text-center">
+          No movies found
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- 邮件订阅表单优化 -->
+  <div class="newsletter-section mt-5 pt-5 border-top">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card newsletter-card">
+          <div class="card-body text-center">
+            <h2 class="mb-4">Join Our Newsletter</h2>
+            <form class="newsletter-form">
+              <div class="input-group mb-3">
+                <input type="email"
+                       class="form-control form-control-lg"
+                       placeholder="Enter your email"
+                       aria-label="Email"
+                       required>
+                <button class="btn btn-primary btn-lg" type="submit">
+                  Subscribe
+                </button>
+              </div>
+              <small class="text-muted">We'll never share your email with anyone else.</small>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
