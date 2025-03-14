@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-z4=lhf2zp_l!&&p)&r0&!pn#r1a*!@kca4ckk**^qm72b#ffm5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://movieshop-dqage3hbdabgd5c2.australiaeast-01.azurewebsites.net']
 
 
 # Application definition
@@ -85,13 +85,13 @@ DATABASES = {
     #}
     'default': {
         "ENGINE": "mssql",
-        "NAME": "mysqldb",
-        "USER": "sa",
-        "PASSWORD": "YKFkV859nudQj7Y4",
-        "HOST": "20241142-LIHUAS",
+        "NAME": "mysqlserver",
+        "USER": "sql-server",
+        "PASSWORD": "MyAisShop123@@@",
+        "HOST": "shop-ais-sqlserver.database.windows.net",
         "PORT": "1433",
         "OPTIONS": {
-            "driver": "ODBC Driver 17 for SQL Server",
+            'DRIVER': 'SQL Server Native Client 11.0',
             "Encrypt": "yes",
             "TrustServerCertificate": "no"
         },
