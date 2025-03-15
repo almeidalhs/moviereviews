@@ -86,16 +86,16 @@ DATABASES = {
     #}
     'default': {
         "ENGINE": "mssql",
-         "NAME": "mysqldb",
-         "USER": "sa",
-         "PASSWORD": "YKFkV859nudQj7Y4",
-         "HOST": "20241142-LIHUAS",
-         "PORT": "1433",
-         "OPTIONS": {
-             "driver": "ODBC Driver 17 for SQL Server",
-             "Encrypt": "yes",
-             "TrustServerCertificate": "no"
-         },
+        "NAME": "mysqlserver",
+        "USER": "sql-server",
+        "PASSWORD": "MyAisShop123@@@",
+        "HOST": "shop-ais-sqlserver.database.windows.net",
+        "PORT": "1433",
+        "OPTIONS": {
+            "driver": "ODBC Driver 17 for SQL Server",
+            "Encrypt": "yes",
+            "TrustServerCertificate": "no"
+        },
     },
 }
 
