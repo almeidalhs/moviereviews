@@ -87,9 +87,9 @@ DATABASES = {
     'default': {
         "ENGINE": "mssql",
         "NAME": "mysqlserver",
-        "USER": "sql-server",
-        "PASSWORD": "MyAisShop123@@@",
-        "HOST": "shop-ais-sqlserver.database.windows.net",
+        "USER": "admin123",
+        "PASSWORD": "admin987###",
+        "HOST": "newshop-db-server.database.windows.net",
         "PORT": "1433",
         "OPTIONS": {
             "driver": "ODBC Driver 17 for SQL Server",
