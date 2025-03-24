@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'movie',
-    'news',
-    'accounts',
+    'movie.apps.MovieConfig',
+    'news.apps.NewsConfig',
+    'accounts.apps.AccountsConfig',
     'cart.apps.CartConfig',
     'orders.apps.OrdersConfig',
 ]
@@ -85,20 +85,22 @@ DATABASES = {
     #    'NAME': BASE_DIR / 'db.sqlite3',
     #}
     'default': {
-        "ENGINE": "mssql",
-        "NAME": "mysqlserver",
-        "USER": "admin123",
-        "PASSWORD": "admin987###",
-        "HOST": "newshop-db-server.database.windows.net",
-        "PORT": "1433",
-        "OPTIONS": {
-            "driver": "ODBC Driver 17 for SQL Server",
-            "Encrypt": "yes",
-            "TrustServerCertificate": "no"
-        },
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'super123456',
+        'HOST': 'localhost',
+        'PORT': '5432',
     },
 }
 
+if os.getenv('DJANGO_TEST_ENVIRONMENT'):
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -153,3 +155,4 @@ STATICFILES_DIRS = [
 ]
 
 LOGIN_URL = 'loginaccount'
+
