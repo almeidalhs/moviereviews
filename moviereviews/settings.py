@@ -85,12 +85,17 @@ DATABASES = {
     #    'NAME': BASE_DIR / 'db.sqlite3',
     #}
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'super123456',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        "ENGINE": "mssql",
+        "NAME": "mysqlserver",
+        "USER": "admin123",
+        "PASSWORD": "admin987###",
+        "HOST": "newshop-db-server.database.windows.net",
+        "PORT": "1433",
+        "OPTIONS": {
+            "driver": "ODBC Driver 17 for SQL Server",
+            "Encrypt": "yes",
+            "TrustServerCertificate": "no"
+        },
     },
 }
 
