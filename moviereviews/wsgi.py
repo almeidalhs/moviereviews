@@ -15,3 +15,4 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'moviereviews.settings')
 
 application = get_wsgi_application()
 wsgi = application
+print(wsgi)
